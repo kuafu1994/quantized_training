@@ -170,6 +170,20 @@ class ResNet(nn.Module):
                 elif isinstance(m, BasicBlock):
                     nn.init.constant_(m.bn2.weight, 0)
 
+        self.regime = [
+            {
+                'epoch':0, 'optimizer': 'SGD', 'lr': 1e-1, 'weight_decay':1e-4, 'momentum': 0.9
+            },
+            {
+                'epoch': 30, 'lr': 1e-2
+            },
+            {
+                'epoch': 60, 'lr':1e-3, 'weight_decay': 0
+            },
+            {
+                'epoch': 90, 'lr': 1e-4
+            }
+        ]
     def _make_layer(self, block, planes, blocks, stride=1, dilate=False):
         norm_layer = self._norm_layer
         downsample = None
@@ -207,6 +221,7 @@ class ResNet(nn.Module):
         x = self.layer4(x)
 
         x = self.avgpool(x)
+  
         x = torch.flatten(x, 1)
         x = self.fc(x)
 

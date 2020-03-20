@@ -3,7 +3,7 @@
 import os
 import torchvision.datasets as datasets
 
-__DATASETS_DEFAULT_PATH = '' # configure the dataset
+__DATASETS_DEFAULT_PATH = '/home/pfzhang/dataset/' # configure the dataset
 
 
 def get_dataset(name, split='train', transform=None, download=False,
